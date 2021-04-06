@@ -1,10 +1,10 @@
 # Flashbots
 
-Flashbots is a research and development organization working on mitigating the negative externalities of current MEV extraction techniques and avoiding the existential risks MEV could cause to state-rich blockchains like Ethereum. Our primary focus is to enable a permissionless, transparent, and fair ecosystem for MEV extraction. It falls under three goals: Democratizing Access to MEV Revenue, Bringing Transparency to MEV Activity and Redistributing MEV Revenue.
+Flashbots is a research and development organization working on mitigating the negative externalities of current MEV extraction techniques and avoiding the existential risks MEV could cause to state-rich blockchains like Ethereum. Our primary focus is to enable a permissionless, transparent, and fair ecosystem for MEV extraction. Flashbots has three primary goals: Democratizing Access to MEV Revenue, Bringing Transparency to MEV Activity and Redistributing MEV Revenue.
 
 We've released two projects so far: 
-* Flashbots Alpha: a proof of concept communication channel between miners and searchers for transparent and efficient MEV extraction.
-* MEV-Explore: a public dashboard and live transactions explorer of MEV activity.
+* [Flashbots Alpha](https://github.com/flashbots/pm#Flashbots-Alpha): a proof of concept communication channel between miners and searchers for transparent and efficient MEV extraction.
+* [MEV-Explore](https://github.com/flashbots/pm#mev-explore): a public dashboard and live transactions explorer of MEV activity.
 
 You can interact with Flashbots on Discord and Github. We have dedicated channels on Discord for each of our efforts and welcome contributions. Our work is open source and you can follow our progress in each repository of the Flashbots organization. In addition, we hold several recurring community calls: a monthly MEV Roast, a bi-weekly research workshop and a monthly transparency call to update the community on our progress. 
 
@@ -24,14 +24,15 @@ Learn more about our values and our mission: [Flashbots - Frontrunning the MEV C
 ----
 ## Flashbots Alpha
 
-On Jan 6th 2021, we entered the Flashbots Alpha phase by establishing a proof-of-concept communication channel between traders (searchers) and miners. This proof-of-concept is made of two components: MEV-Geth, a slightly modified fork of the Ethereum Geth client, and MEV-Relay, a transaction bundle relayer.
+On Jan 6th 2021, we entered the Flashbots Alpha phase by establishing a proof-of-concept communication channel between traders (searchers) and miners. This proof-of-concept is made of two components: [MEV-Geth](https://github.com/flashbots/mev-geth), a slightly modified fork of the Ethereum Geth client, and [MEV-Relay](https://github.com/flashbots/mev-relay-js), a transaction bundle relayer.
 
 **How it works:**
 * Searchers send Flashbots "bundles" to MEV-Relay. A bundle contains:
-  * one or several transactions that can be the searcher's and/or other users' pending transactions from the mempool
-  * a sealed tip that is paid by the searcher to the miner via a smart contract call to `block.coinbase.transfer()`
+  * One or several transactions that can be the searcher's and/or other users' pending transactions from the mempool
+  * A sealed tip that is paid by the searcher to the miner via a smart contract call to `block.coinbase.transfer()`
 * Moreover, bundles have these properties:
   * There can only be a single bundle per block (we are working on bundle merging to enable multiple)
+  * Searchers can specify transaction order preferences using bundles
   * Flashbots bundles will always be at the top slot of the block
 * MEV-Relay receives bundles and sends them to all whitelisted MEV-Geth miners
 * Miners receive Flashbots bundles from MEV-Relay and process them in MEV-Geth
@@ -41,9 +42,9 @@ On Jan 6th 2021, we entered the Flashbots Alpha phase by establishing a proof-of
   * If a bundle is not included it does not cost the searcher anything (i.e. no gas fees are paid for failed transactions)
 
 This infrastructure allows:
-* searchers to bypass the Ethereum mempool and avoid their strategy leaking before it is mined on-chain (i.e. being frontrun by generalized frontrunners)
-* searchers to save money from avoiding to pay gas fees for failed transactions.
-* miners to receive additional revenue in the form of the bundle tip, in exchange for including the most profitable bundle in the block they mined.
+* Searchers to bypass the Ethereum mempool and avoid their strategy leaking before it is mined on-chain (i.e. being frontrun by generalized frontrunners)
+* Searchers to save money from avoiding to pay gas fees for failed transactions.
+* Miners to receive additional revenue in the form of the bundle tip, in exchange for including the most profitable bundle in the block they mined.
 
 Interested in learning more?
 <br> [Onboard Flashbots alpha as a searcher](https://github.com/flashbots/pm/blob/main/guides/searcher-onboarding.md)
@@ -117,22 +118,22 @@ MEV Roast is a monthly discussion that stems from the research collective MEV Pi
 <br> A fork of the Geth client dubbed MEV-Geth modified to accept Flashbots transaction bundles and to compare Flashbots blocks to regular blocks.
 
 [/mev-geth-demo](https://github.com/flashbots/mev-geth-demo)
-<br> Launches an MEV GETH node, and shows how a miner may profit from it by accepting MEV bundles
+<br> Launches an MEV GETH node, and shows how a miner may profit from it by accepting MEV bundles.
 
 [/mev-relay-js](https://github.com/flashbots/mev-relay-js)
 <br> The code for the entrypoint searchers send their Flashbots bundles to and miners connect to in order to receive bundles. Includes an example of a a reverse proxy that a miner can run.
 
 [/ethers-provider-flashbots-bundle](https://github.com/flashbots/ethers-provider-flashbots-bundle)
-<br> Flashbots provider for ethers.js
+<br> An ethers.js provider used to interact with Flashbots.
 
 [/web3-flashbots](https://github.com/flashbots/web3-flashbots)
-<br> Flashbots provider for web3.py 
+<br> A web3.py provider used to interact with Flashbots.
 
 [/simple-arbitrage](https://github.com/flashbots/simple-arbitrage)
 <br> An example arbitrage bot that uses Flashbots.
 
 [/mev-inspect-rs](https://github.com/flashbots/mev-inspect-rs)
-<br> The Rust codebase of the inspectors we run to scrape Ethereum data we use in MEV-Explore.
+<br> The Rust codebase of the tools, dubbed "inspectors," we run to scrape Ethereum data we use in MEV-Explore.
 
 [/mev-explore-public](https://github.com/flashbots/mev-explore-public)
 <br> All things MEV-Explore: report bugs, request features by opening an issue and start a discussion in the discussion tab.
@@ -140,3 +141,5 @@ MEV Roast is a monthly discussion that stems from the research collective MEV Pi
 [/mev-research](https://github.com/flashbots/mev-research)
 <br> All our research activity. Learn about our research organization, the MEV research fellowship, submit a Flashbots research proposal as a PR, open an issue to start a discussion.
 
+[/searcher-sponsored-tx](https://github.com/flashbots/searcher-sponsored-tx)
+<br> A simple script that uses Flashbots to send a transaction from account X, but paying for that transaction from account Y.
